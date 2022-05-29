@@ -25,9 +25,11 @@ import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.account.Account;
 import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.craftconomy3.currency.Currency;
+import com.greatmancode.craftconomy3.events.MoneyTransferEvent;
 import com.greatmancode.craftconomy3.tools.commands.CommandSender;
 import com.greatmancode.craftconomy3.tools.entities.Player;
 import com.greatmancode.craftconomy3.tools.utils.Tools;
+import org.bukkit.Bukkit;
 
 public class PayCommand extends AbstractCommand {
     public PayCommand(String name) {
@@ -60,6 +62,8 @@ public class PayCommand extends AbstractCommand {
                                 .getInstance().getLanguageManager().parse("money_pay_received",
                                         Common.getInstance().format(null, currency, amount), sender.getName()));
                     }
+                    MoneyTransferEvent event = new MoneyTransferEvent(Bukkit.getPlayer(sender.getUuid()), Bukkit.getPlayer(reciever.getUuid()), amount);
+                    Bukkit.getPluginManager().callEvent(event);
                 } else {
                     sendMessage(sender, Common.getInstance().getLanguageManager().getString("not_enough_money"));
                 }
