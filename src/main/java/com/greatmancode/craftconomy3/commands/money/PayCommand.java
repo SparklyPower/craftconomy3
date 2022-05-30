@@ -62,7 +62,7 @@ public class PayCommand extends AbstractCommand {
                                 .getInstance().getLanguageManager().parse("money_pay_received",
                                         Common.getInstance().format(null, currency, amount), sender.getName()));
                     }
-                    MoneyTransferEvent event = new MoneyTransferEvent(Bukkit.getPlayer(sender.getUuid()), Bukkit.getPlayer(reciever.getUuid()), amount);
+                    MoneyTransferEvent event = new MoneyTransferEvent(sender.getName(), args[0], amount);
                     Bukkit.getPluginManager().callEvent(event);
                 } else {
                     sendMessage(sender, Common.getInstance().getLanguageManager().getString("not_enough_money"));
